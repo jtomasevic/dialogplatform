@@ -1,0 +1,93 @@
+
+
+
+.comments, .likes{
+    height:0px;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    border-width: 0px;
+    border-color: #F5F5F5;
+    margin-top: -10px;
+    padding-top: 10px;
+    opacity: 0;
+    display: none;
+}
+.comments-container{
+    position: relative;
+    overflow-y: auto ;
+    line-height: 18px;
+    max-height: 400px;
+}
+.story-block-comment-container{
+    /*background-color: #f4f4f4;*/
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    display: block;
+    vertical-align: top;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    min-height: 0px;
+    padding-bottom: 16px;
+    padding-left: 52px;
+    padding-right: 20px;
+    padding-top: 0px;
+
+}
+.story-block-comment-profile-img{
+    margin-right: 5px;
+    display: inline;
+    height: auto;
+    width: auto;
+}
+.story-block-comment-profile-img  img{
+    float: left;
+    margin-bottom: 0px;
+    margin-left: -38px;
+    margin-right: 0px;
+    margin-top: 4px;
+    height: 28px;
+    width: 28px;
+    border-radius: 3px;
+}
+.story-block-comment{
+    display: block;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: -20px;
+    /*width: 150px;*/
+}
+.story-block-comment-username{
+    display: block;
+    position: relative;
+}
+.story-block-comment-username > a{
+    font-weight: bold;
+    display: inline;
+    font-family: Roboto, sans-serif;
+    font-size: 13px;
+    color: #000000;
+}
+
+.story-block-comment-text{
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+    visibility: visible;
+    white-space: normal;
+}
+.story-block-comment-date{
+    margin-left: 10px;
+    font-size: 11px;
+    color: #b1b1b1;
+}
+.story-block-like-date{
+    font-size: 11px;
+    color: #b1b1b1;
+}
+
+.no-likes:hover{
+    color:red;
+}
