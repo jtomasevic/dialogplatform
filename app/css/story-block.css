@@ -12,12 +12,31 @@
     opacity: 0;
     display: none;
 }
+
+
+.comments2{
+    height:0px;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    border-width: 0px;
+    border-color: #F5F5F5;
+
+}
+
+
 .comments-container{
     position: relative;
     overflow-y: auto ;
     line-height: 18px;
     max-height: 400px;
 }
+
+.comments-container2{
+    overflow-y: auto ;
+    line-height: 18px;
+    padding-top: 20px;
+}
+
 .story-block-comment-container{
     /*background-color: #f4f4f4;*/
     font-family: 'Roboto', sans-serif;

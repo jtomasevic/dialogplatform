@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-3">
+        <form role="form">
+            <div class="form-group">
+                    <input type="email" placeholder="Username or email" class="form-control" ng-model="user.email">
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" class="form-control" ng-model="user.password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success pull-right" value="Submit" ng-click="signin(user)">Sign in</button>
+                <a ng-click="signupVisible = !signupVisible" style="cursor: pointer">Don't have account? You want to sing up ?</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5"></div>
+</div>
