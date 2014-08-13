@@ -1,64 +1,242 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-
-            <p>
+            <p class="topic-title">
                 {{topic.title}}
             </p>
-            <p>
+            <p class="topic-description">
                 {{topic.description}}
             </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12 ">
-            <div class="btn-group">
-                <button class="btn btn-default" ng-repeat="tag in topic.tags" ng-click="setComments(tag)">
-                    {{tag.name}}
-                </button>
+    <div class="moderator-tab-buttons" >
+        <a data-toggle="collapse" data-parent="#accordion" href="#userTab" target="_self" id="toggleUserView">
+            User conversation
+        </a> &nbsp; &nbsp; &nbsp;
+        <a data-toggle="collapse" data-parent="#accordion" href="#moderatorTab" target="_self" id="toggleModeratorView">
+            Moderator tagging
+        </a>
+    </div>
+    <div id= "userTab">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="btn-group ">
+                    <button class="btn btn-default tag" ng-repeat="tag in topic.tags" ng-click="setComments(tag)">
+                        {{tag.name}}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row comments2">
-
-        <div class="col-sm-12 comments-container2">
-            <div class="col-sm-12 story-block-comment-container"  ng-repeat="com in comments">
-                <a class="story-block-comment-profile-img" herf="#">
-                    <img ng-src="img/profiles/{{com.user.img}}">
-                </a>
-                <div class="story-block-comment">
-                    <div class="story-block-comment-username">
-                        <a href="#" toggle-small-profile="comment.profile">{{com.user.name}}</a>
+        <div class="row comments-group">
+            <div class="col-sm-12 ">
+                <div ng-show = "selectedTag!=null">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="4" placeholder="Enter Your Comment" ng-model="comment.text"></textarea>
+                        </div>
                     </div>
-                    <div class="story-block-comment-text">
-                        {{com.text}}
+                    <div class="form-group comment-buttons">
+                        <p class="col-sm-10">
+                            <button class="btn btn-success" ng-click="addComment(comment); ">Submit</button>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-12 comment-container"  ng-repeat="com in comments">
+                    <a class="comment-profile-img" herf="#">
+                        <img ng-src="img/profiles/{{com.user.img}}">
+                    </a>
+                    <div class="up-down-votes">
+                        <div>
+                            <a href="" ng-click="com.votes = com.votes + 1">
+                                <i class="fa fa-angle-up"></i>
+                            </a>
+                        </div>
+                        <div>
+                            {{com.votes}}
+                        </div>
+                        <div>
+                            <a href="" ng-click="com.votes = com.votes - 1"><i class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="comment-profile-username">
+                            <a href="" toggle-small-profile="comment.profile">{{com.user.name}}</a>
+                        </div>
+                        <div class="">
+                            {{com.text}}
+                        </div>
+                        <div class="comment-actions">
+                            <a href="" ng-click="com.showComment = !com.showComment ">reply</a>
+                            <a href="" ng-show="user_role == 'moderator' " ng-click="com.showTrasferSection = !com.showTrasferSection">move</a>
+                        </div>
+                        <div ng-show="com.showComment">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" rows="4" placeholder="Enter Your Comment" ng-model="comment.text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group comment-buttons">
+                                <p class="col-sm-10">
+                                    <button class="btn btn-success" ng-click="addComment(comment); com.showComment = false">Submit</button>
+                                    <button class="btn btn-default" ng-click="com.showComment = false">Cancel</button>
+                                </p>
+                            </div>
+                       </div>
+                        <div ng-show="com.showTrasferSection">
+                            <div class="checkbox" ng-repeat="mtag in topic.moderatorTags">
+                                <label>
+                                    <input type="checkbox" value="" ng-click="toogleTransferToMTags(mtag)">
+                                    {{mtag.name}}
+                                </label>
+                            </div>
+                            <div class="form-group comment-buttons">
+                                <p class="col-sm-10">
+                                    <button class="btn btn-success" ng-click="moderateComment(com); com.showTrasferSection = false;">Move</button>
+                                    <button class="btn btn-default" ng-click="com.showTrasferSection = false">Cancel</button>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
-
+            <hr style="margin-top: 0px; margin-bottom: 5px;">
         </div>
-        <hr style="margin-top: 0px; margin-bottom: 5px;">
-        <form role="form" class="form-horizontal sharingForm" ng-show="selectedTag!=null" ng-model="comment">
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <textarea class="form-control" rows="4" placeholder="Enter Your Comment" ng-model="comment.text"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <p class="col-sm-10">
-                    <button type="submit" class="btn btn-success" ng-click="addComment(comment);">Submit</button>
-                    <button type="submit" class="btn btn-default">Cancel</button>
-                </p>
-
-            </div>
-        </form>
     </div>
 
+    <div id="moderatorTab" class="moderator-tab collapse ">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="btn-group ">
+                    <button class="btn btn-default tag" ng-repeat="mtag in topic.moderatorTags" ng-click="setModeratorComments(mtag)">
+                        {{mtag.name}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row comments-group">
+            <div class="col-sm-12 ">
+                <div class="col-sm-12 comment-container"  ng-repeat="com in mComments">
+                    <a class="comment-profile-img" herf="#">
+                        <img ng-src="img/profiles/{{com.user.img}}">
+                    </a>
+                    <div class="">
+                        <div class="comment-profile-username">
+                            <a href="" toggle-small-profile="comment.profile">{{com.user.name}}</a>
+                        </div>
+                        <div class="">
+                            {{com.text}}
+                        </div>
+                        <div class="comment-actions">
+                            <!--<a href="" ng-click="com.showComment = !com.showComment ">reply</a>-->
+                            <!--<a href="" ng-show="user_role == 'moderator' " ng-click="showTrasferSection = !showTrasferSection">move</a>-->
+                        </div>
+                        <!--<div ng-show="com.showComment">-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="col-sm-12">-->
+                                    <!--<textarea class="form-control" rows="4" placeholder="Enter Your Comment" ng-model="comment.text"></textarea>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group comment-buttons">-->
+                                <!--<p class="col-sm-10">-->
+                                    <!--<button class="btn btn-success" ng-click="addComment(comment);">Submit</button>-->
+                                    <!--<button class="btn btn-default" ng-click="showComment = false">Cancel</button>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div ng-show="com.showTrasferSection">-->
+                            <!--<div class="checkbox" ng-repeat="mtag in topic.moderatorTags">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" value="" ng-click="toogleTransferToMTags(mtag)">-->
+                                    <!--{{mtag.name}}-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="form-group comment-buttons">-->
+                                <!--<p class="col-sm-10">-->
+                                    <!--<button class="btn btn-success" ng-click="com.showTrasferSection = false; moderateComment(com); ">Link comment</button>-->
+                                    <!--<button class="btn btn-default" ng-click="com.showTrasferSection = false">Cancel</button>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+
+                </div>
+
+            </div>
+            <hr style="margin-top: 0px; margin-bottom: 5px;">
+        </div>
+    </div>
 </div>
 
+<script>
+    $("#toggleUserView").click(function(){
 
+    });
+</script>
 
+<style>
+
+    .topic-title{
+        padding-top: 10px;
+        font-size: 16px;
+        color:#34495e;
+    }
+    .topic-description{
+        color:#34495e;
+    }
+    .btn.btn-default.tag{
+        margin-right: 10px;
+    }
+    .comments-group{
+        padding-top: 10px;
+    }
+    .row.comments-group{
+        padding-top: 0px;
+
+    }
+    .col-sm-12.comment-container{
+        padding-left: 5px;
+        padding-bottom: 10px;
+    }
+    .comment-profile-img > img{
+        width: 40px;
+        float: left;
+        margin-right: 10px;
+        display: none;
+    }
+
+    .up-down-votes{
+        float: left;
+        padding-right: 10px;
+        margin-top: -5px;
+        width:45px;
+    }
+    .up-down-votes  a{
+        font-size: 20px;
+        width: 45px;
+        text-align: center;
+    }
+    .comment-buttons > p{
+        margin-top: 10px;
+    }
+    .comment-profile-username > a{
+        color: #34495e;
+        font-weight: bold;
+    }
+    .comment-actions > a{
+        color: #c0392b;
+    }
+    .moderator-tab-buttons{
+        margin-bottom: 5px;
+    }
+    .moderator-tab{
+        margin-bottom: 5px;
+        border-top: 1px solid #16a085;
+        padding-top: 10px;
+    }
+</style>
 
 

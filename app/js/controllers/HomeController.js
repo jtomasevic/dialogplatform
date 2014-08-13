@@ -26,6 +26,8 @@ chiselApp.controller('HomeController',
                 .then(function(data){
                     $cookies.user_id = data.body.user.id;
                     $cookies.user_name = user.email;
+                    $cookies.role = data.body.user.role;
+
                     console.log("signin", data.body.user);
                     window.location.href = '#/topics';
                 });
