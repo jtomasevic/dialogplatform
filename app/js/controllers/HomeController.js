@@ -6,7 +6,7 @@
 chiselApp.controller('HomeController',
     function HomeController($scope, userService, $cookies){
         $scope.user = {
-            email : 'jtomasevic@gmail.com',
+            email : 'pedja@gmail.com',
             password : '123456'
         }
         $scope.signupVisible = false;
@@ -16,7 +16,7 @@ chiselApp.controller('HomeController',
                 .then(function(data){
                     $cookies.user_id = data.body.user.id;
                     console.log("signup", data.body.user);
-                    window.location.href = '#/main';
+                    window.location.href = '#/topics';
                 });
 
         }
